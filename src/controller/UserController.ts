@@ -40,6 +40,17 @@ export class UserController {
         }
     }
 
+    async addHistory(request: Request, response: Response, next: NextFunction) {
+        const {id, comm} = request.body
+        const user = await this.userRepository.findOne({
+            where: {idCard: id}
+        })
+        const commList = comm.split(',')
+        const commHistory = Array.from(new Set(commList)).join(',')
+        user.history = commHistory
+        return this.userRepository.save(user)
+    }
+
     async one(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id)
 
@@ -56,7 +67,6 @@ export class UserController {
 
     async save(request: Request, response: Response, next: NextFunction) {
         const { firstName, lastName, age } = request.body;
-
         const user = Object.assign(new User(), {
             firstName,
             lastName,
