@@ -9,7 +9,7 @@ export const Routes = [{
     method: "get",
     route: "/users/:id",
     controller: UserController,
-    action: "one"
+    action: "getBaseInfo"
 }, {
     method: "post",
     route: "/addHistory",
