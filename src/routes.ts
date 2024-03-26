@@ -1,4 +1,5 @@
 import { UserController } from "./controller/UserController"
+import { AddressController } from "./controller/AddressController"
 
 export const Routes = [{
     method: "post",
@@ -25,4 +26,17 @@ export const Routes = [{
     route: '/register',
     controller: UserController,
     action: 'register'
-}]
+},
+{
+    method: 'post',
+    route: '/addNewAddress',
+    controller: AddressController,
+    action: 'addNewAddress'
+},
+{
+    method: 'get',
+    route: "/getAddress/:id",
+    controller: AddressController,
+    action: 'getAddress'
+}
+]

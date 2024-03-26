@@ -19,15 +19,16 @@ export class UserController {
             password: password,
             history: '',
             phone: 0,
-            sign: 0
+            sign: 0,
+            address: ''
         })
         this.userRepository.save(userInfo)
         return { 'code': 0, 'msg': 'success' }
     }
 
     async login(request: Request, response: Response, next: NextFunction) {
-        const { id, password } = request.body
-        const userHistory = await this.userRepository.findOne({ where: { idCard: id } })
+        const { id, password, userType } = request.body
+        const userHistory = await this.userRepository.findOne({ where: { idCard: id, userType } })
         if (userHistory === null) {
             return { 'code': 200, 'msg': '未查找到此学生证对应信息,请检查或联系管理员' }
         }
