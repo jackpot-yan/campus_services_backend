@@ -1,6 +1,6 @@
-import { AppDataSource } from "../data-source"
-import { NextFunction, Request, Response } from "express"
-import { User } from "../entity/User"
+import {AppDataSource} from "../data-source"
+import {NextFunction, Request, Response} from "express"
+import {User} from "../entity/User"
 
 export class UserController {
 
@@ -20,14 +20,45 @@ export class UserController {
             history: '',
             phone: 0,
             sign: 0,
-            address: ''
+            address: '',
+            part: '',
+            finish: '',
         })
-        this.userRepository.save(userInfo)
+        await this.userRepository.save(userInfo)
+        return { 'code': 0, 'msg': 'success' }
+    }
+
+    async createAdmin(request: Request, response: Response, next: NextFunction) {
+        const adminInfo = await this.userRepository.findOne({ where: { userType: 1 } })
+        if (adminInfo) {
+            return {'code': 0, 'msg': 'success'}
+        }
+        const admin = Object.assign(new User(), {
+            idCard: 0,
+            userType: 1,
+            name: 'admin',
+            password: 'admin',
+            history: '',
+            phone: 0,
+            sign: 0,
+            address: '',
+            part: '',
+            finish: '',
+        })
+        await this.userRepository.save(admin)
         return { 'code': 0, 'msg': 'success' }
     }
 
     async login(request: Request, response: Response, next: NextFunction) {
         const { id, password, userType } = request.body
+        if (userType === 1) {
+            const userHistory = await this.userRepository.findOne({where: {userType: 1}})
+            if (password === userHistory.password) {
+                return {'code': 0, 'msg': 'success'}
+            } else {
+                return {'code': 100, 'msg': '密码错误'}
+            }
+        }
         const userHistory = await this.userRepository.findOne({ where: { idCard: id, userType } })
         if (userHistory === null) {
             return { 'code': 200, 'msg': '未查找到此学生证对应信息,请检查或联系管理员' }
@@ -45,8 +76,7 @@ export class UserController {
             where: { idCard: id }
         })
         const commList = comm.split(',')
-        const commHistory = Array.from(new Set(commList)).join(',')
-        user.history = commHistory
+        user.history = Array.from(new Set(commList)).join(',')
         return this.userRepository.save(user)
     }
 

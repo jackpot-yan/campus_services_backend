@@ -1,6 +1,6 @@
-import { AppDataSource } from "../data-source"
-import { NextFunction, Request, Response } from "express"
-import { Address } from "../entity/address"
+import {AppDataSource} from "../data-source"
+import {NextFunction, Request, Response} from "express"
+import {Address} from "../entity/address"
 
 export class AddressController {
     private addressRepository = AppDataSource.getRepository(Address)
@@ -15,7 +15,7 @@ export class AddressController {
                 city: city,
                 street: street
             })
-            this.addressRepository.save(addressInfo)
+            await this.addressRepository.save(addressInfo)
             return { 'code': 0, 'msg': 'success' }
         } catch {
             return { 'code': 'cv-6', 'msg': '添加错误' }
@@ -24,7 +24,6 @@ export class AddressController {
 
     async getAddress(request: Request, response: Response, next: NextFunction) {
         const idCard = parseInt(request.params.id)
-        const addressInfo = await this.addressRepository.find({ where: { idCard } })
-        return addressInfo
+        return await this.addressRepository.find({where: {idCard}})
     }
 }

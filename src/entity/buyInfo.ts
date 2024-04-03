@@ -1,23 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-export class Commod {
+export class BuyInfo {
     @PrimaryGeneratedColumn()
     id: number
     @Column()
-    title: string
+    time: string
     @Column()
-    page: string
-    @Column()
-    stock: number
-    @Column()
-    single: number
+    name: string
     @Column()
     idCard: number
     @Column()
-    introduce: string
+    num: number
     @Column()
-    state: number
-    @Column()
-    addTime: string
+    total: string
 }
