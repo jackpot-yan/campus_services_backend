@@ -1,6 +1,9 @@
 import {AppDataSource} from "../data-source"
 import {NextFunction, Request, Response} from 'express'
 import {Commod} from "../entity/Commod"
+import * as fs from "fs";
+import {Buffer} from "node:buffer";
+
 const path = require('path')
 
 
@@ -88,10 +91,25 @@ export class CommodController {
             }
         })
         const info = await this.commodRespository.find({where: findCondition})
+        info.forEach((item, _) => {
+            if (!item.page.startsWith('https')) {
+                const fileContent = fs.readFileSync(item.page)
+                const buffer = Buffer.from(fileContent)
+                item.page = 'data:image;base64,' + buffer.toString('base64')
+            }
+        })
         return {'code': 0, 'msg': info}
     }
 
     async getHomeData(request: Request, response: Response, next: NextFunction) {
-        return await this.commodRespository.find({where: {state: 1}})
+        const info = await this.commodRespository.find({where: {state: 1}})
+        info.forEach((item, _) => {
+            if (!item.page.startsWith('https')) {
+                const fileContent = fs.readFileSync(item.page)
+                const buffer = Buffer.from(fileContent)
+                item.page = 'data:image;base64,' + buffer.toString('base64')
+            }
+        })
+        return info
     }
 }

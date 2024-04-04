@@ -16,7 +16,8 @@ AppDataSource.initialize().then(async () => {
     app.use(fileUpload({
         createParentPath: true
     }));
-    app.use(bodyParser.json())
+    app.use(bodyParser.json({limit: '50mb'}))
+    app.use(bodyParser.urlencoded({limit: '60mb'}))
 
     // register express routes from defined application routes
     Routes.forEach(route => {
