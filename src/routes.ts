@@ -125,5 +125,29 @@ export const Routes = [{
         route: '/getAcceptInfo/:idCard',
         controller: PartController,
         action: 'getAcceptInfo'
+    },
+    {
+        method: 'post',
+        route: '/writeBaseCommod',
+        controller: CommodController,
+        action: 'writeBaseCommod'
+    },
+    {
+        method: 'post',
+        route: '/getHistoryData',
+        controller: CommodController,
+        action: 'getHistoryData'
+    },
+    {
+        method: 'get',
+        route: '/getHomeData',
+        controller: CommodController,
+        action: 'getHomeData'
+    },
+    {
+        method: 'post',
+        route: '/modifyInfo',
+        controller: UserController,
+        action: 'modifyBaseInfo'
     }
 ]

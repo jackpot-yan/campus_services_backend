@@ -82,48 +82,17 @@ export class UserController {
 
     async getBaseInfo(request: Request, response: Response, next: NextFunction) {
         const idCard = parseInt(request.params.id)
-        const user = await this.userRepository.findOne({
-            where: { idCard }
+        return await this.userRepository.findOne({
+            where: {idCard}
         })
-        return user
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id)
-
-
-        const user = await this.userRepository.findOne({
-            where: { id }
-        })
-
-        if (!user) {
-            return "unregistered user"
-        }
-        return user
-    }
-
-    async save(request: Request, response: Response, next: NextFunction) {
-        const { firstName, lastName, age } = request.body;
-        const user = Object.assign(new User(), {
-            firstName,
-            lastName,
-            age
-        })
-
-        return this.userRepository.save(user)
-    }
-
-    async remove(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id)
-
-        let userToRemove = await this.userRepository.findOneBy({ id })
-
-        if (!userToRemove) {
-            return "this user not exist"
-        }
-
-        await this.userRepository.remove(userToRemove)
-
-        return "user has been removed"
+    async modifyBaseInfo(request: Request, response: Response, next: NextFunction) {
+        const {idCard, modify,modifyValue} = request.body
+        const Card = parseInt(idCard)
+        const baseInfo = await this.userRepository.findOne({where: {idCard: Card}})
+        baseInfo[modify] = modifyValue
+        await this.userRepository.save(baseInfo)
+        return {'code': 0, 'msg': 'success'}
     }
 }
