@@ -24,4 +24,10 @@ export class BuyInfoController {
         const idCard = parseInt(request.params.id)
         return await this.buyRepository.find({where: {idCard}})
     }
+
+    async deleteBuyHistory(request: Request, response: Response, next: NextFunction) {
+        const id = parseInt(request.params.id)
+        const info =  await this.buyRepository.findOne({where: {id}})
+        return await this.buyRepository.remove(info)
+    }
 }

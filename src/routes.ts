@@ -3,6 +3,8 @@ import {AddressController} from "./controller/AddressController"
 import {BuyInfoController} from "./controller/BuyController";
 import {CommodController} from "./controller/CommodController";
 import {PartController} from "./controller/PartController";
+import {CollectController} from "./controller/CollectController";
+import {CommentController} from "./controller/commentController";
 
 export const Routes = [{
     method: "post",
@@ -149,5 +151,41 @@ export const Routes = [{
         route: '/modifyInfo',
         controller: UserController,
         action: 'modifyBaseInfo'
+    },
+    {
+        method: 'post',
+        route: '/addCollect',
+        controller: CollectController,
+        action: 'addCollect'
+    },
+    {
+        method: 'get',
+        route: '/getCollect/:idCard',
+        controller: CollectController,
+        action: 'getCollect'
+    },
+    {
+        method: 'post',
+        route: '/removeCollect',
+        controller: CollectController,
+        action: 'deleteCollect'
+    },
+    {
+        method: 'post',
+        route: '/addComment',
+        controller: CommentController,
+        action: 'addComment'
+    },
+    {
+        method: 'get',
+        route: '/getComment/:partId',
+        controller: CommentController,
+        action: 'getComment'
+    },
+    {
+        method: 'get',
+        route: '/deleteHistory/:id',
+        controller: BuyInfoController,
+        action: 'deleteBuyHistory'
     }
 ]

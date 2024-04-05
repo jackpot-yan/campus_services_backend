@@ -8,7 +8,7 @@ export class Address {
     idCard: number
     @Column()
     name: string
-    @Column()
+    @Column({type: 'bigint'})
     phone: number
     @Column()
     city: string

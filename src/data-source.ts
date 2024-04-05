@@ -5,6 +5,8 @@ import {Commod} from "./entity/Commod"
 import {Address} from './entity/address'
 import {BuyInfo} from "./entity/buyInfo";
 import {Part} from "./entity/part";
+import {Collect} from "./entity/collect";
+import {Comment} from "./entity/comment";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -15,7 +17,7 @@ export const AppDataSource = new DataSource({
     database: "campus",
     synchronize: true,
     logging: false,
-    entities: [User, Commod, Address, BuyInfo, Part],
+    entities: [User, Commod, Address, BuyInfo, Part, Collect, Comment],
     migrations: [],
     subscribers: [],
 })
