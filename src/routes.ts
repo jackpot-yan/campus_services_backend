@@ -5,6 +5,7 @@ import {CommodController} from "./controller/CommodController";
 import {PartController} from "./controller/PartController";
 import {CollectController} from "./controller/CollectController";
 import {CommentController} from "./controller/commentController";
+import { ReportController } from "./controller/ReportController";
 
 export const Routes = [{
     method: "post",
@@ -187,5 +188,41 @@ export const Routes = [{
         route: '/deleteHistory/:id',
         controller: BuyInfoController,
         action: 'deleteBuyHistory'
+    },
+    {
+        method: 'post',
+        route: '/addReport',
+        controller: ReportController,
+        action: 'addReport'
+    },
+    {
+        method: 'get',
+        route: '/getReport',
+        controller: ReportController,
+        action: 'getReport'
+    },
+    {
+        method: 'post',
+        route: '/closeReport',
+        controller: ReportController,
+        action: 'closeReport'
+    },
+    {
+        method: 'get',
+        route: '/getUserReport/:idCard',
+        controller: ReportController,
+        action: 'getUserReport'
+    }, 
+    {
+        method: 'get',
+        route: '/getAddressEcharts',
+        controller: AddressController,
+        action: 'getAddresEcharts'
+    },
+    {
+        method: 'get',
+        route: '/getuserHistoryEcharts',
+        controller: UserController,
+        action: 'getHistoryEcharts'
     }
 ]

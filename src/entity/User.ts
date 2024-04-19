@@ -14,7 +14,7 @@ export class User {
     password: string
     @Column()
     history: string
-    @Column()
+    @Column({type:'bigint'})
     phone: number
     @Column()
     sign: number

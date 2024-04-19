@@ -95,4 +95,29 @@ export class UserController {
         await this.userRepository.save(baseInfo)
         return {'code': 0, 'msg': 'success'}
     }
+
+    async getHistoryEcharts(request: Request, response: Response, next: NextFunction) {
+        const info = await this.userRepository.find({where: {userType: 0}})
+        const data = []
+        const x = []
+        const y = []
+        info.forEach((item, _) => {
+            const history = item.history.split(',')
+            data.push(...history)
+        })
+        const count = await this.countElements(data)
+        for (var key in count) {
+            x.push(key)
+            y.push(count[key])
+        }
+        return {'x': x, 'y': y}
+    }
+
+    async countElements(array) {
+        const counts = {};
+        array.forEach(element => {
+          counts[element] = (counts[element] || 0) + 1;
+        });
+        return counts;
+      }
 }
